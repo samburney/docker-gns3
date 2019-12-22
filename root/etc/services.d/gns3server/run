@@ -1,0 +1,20 @@
+#!/usr/bin/with-contenv bash
+
+# Ensure KVM devices are created
+if [ ! -e /dev/kvm ]; then
+   mknod /dev/kvm c 10 $(grep '\<kvm\>' /proc/misc | cut -f 1 -d' ')
+fi
+
+# Prepare to start gns3server as gns3 user
+HOME=/opt/gns3
+USER=abc
+GROUP=abc
+
+# Fix permissions
+chown :kvm /dev/kvm
+chmod g+w /dev/kvm
+chown -R ${USER}:${GROUP} ${HOME}
+
+# Start gns3server
+exec \
+    sudo -u abc /usr/local/bin/gns3server

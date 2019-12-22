@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+# Start docker
+exec \
+    /usr/bin/dockerd

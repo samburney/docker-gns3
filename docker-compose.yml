@@ -1,0 +1,10 @@
+version: '2.4'
+
+services:
+    gns3:
+        image: 'samburney/gns3'
+        build: '.'
+        privileged: true
+        network_mode: 'host'
+        volumes:
+            - './data/gns3:/opt/gns3'

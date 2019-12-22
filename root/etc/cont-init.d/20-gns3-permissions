@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+
+# Change default user's home directory
+usermod -d /opt/gns3 abc
+
+# Add to relevant groups
+adduser abc kvm
+adduser abc docker

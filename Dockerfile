@@ -33,7 +33,12 @@ RUN mkdir /usr/src/dynamips/build \
     && make install
 
 ## gns3-server
+ARG GNS3_VERSION
 RUN cd /usr/src/gns3-server \
+    && if [ -n "$GNS3_VERSION" -a "$GNS3_VERSION" != "master" ] ; then \
+        git fetch --tags \
+        && git checkout "$GNS3_VERSION" \
+    ; fi \
     && python3 setup.py install
 
 # Remove packages only required for the build

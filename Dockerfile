@@ -2,7 +2,7 @@ FROM lsiobase/ubuntu:bionic
 
 LABEL maintainer='Sam Burney <sam@burney.io>'
 
-# Support GNS3_VERSION built-time argument and set default to latest version
+# Support GNS3_VERSION build-time argument and set default to latest version
 ARG GNS3_VERSION=v2.2.3
 
 # Disable dpkg frontend to avoid error messages

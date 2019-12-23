@@ -2,7 +2,8 @@ version: '2.4'
 
 services:
     gns3:
-        image: 'samburney/gns3'
+        image: 'samburney/gns3:latest'
+        restart: 'unless-stopped'
         build: '.'
         privileged: true
         network_mode: 'host'

@@ -2,18 +2,20 @@ FROM lsiobase/ubuntu:bionic
 
 LABEL maintainer='Sam Burney <sam@burney.io>'
 
-# Get GNS3_VERSION argument is set at built time
-ARG GNS3_VERSION
+# Support GNS3_VERSION built-time argument and set default to latest version
+ARG GNS3_VERSION=v2.2.3
 
 # Disable dpkg frontend to avoid error messages
 ENV DEBIAN_FRONTEND="noninteractive"
 
 # Package lists
-ARG PACKAGES="qemu-kvm libvirt-bin virtinst bridge-utils cpu-checker python3-pip sudo"
+ARG PACKAGES="qemu-kvm libvirt-bin virtinst bridge-utils cpu-checker python3-pip sudo libc6:i386 libstdc++6:i386 libssl1.0.0:i386"
 ARG BUILD_PACKAGES="build-essential git libpthread-stubs0-dev libpcap-dev cmake libelf-dev wget"
 
 # Install packages
-RUN apt -y update \
+RUN dpkg --add-architecture i386 \
+    && apt -y update \
+    && apt -y dist-upgrade \
     && apt -y install ${PACKAGES} \
     && apt -y install ${BUILD_PACKAGES} \
     && wget -O - https://get.docker.io | sh \

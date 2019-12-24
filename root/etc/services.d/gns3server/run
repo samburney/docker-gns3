@@ -1,8 +1,16 @@
 #!/usr/bin/with-contenv bash
 
-# Ensure KVM devices are created
+# Ensure required devices are created
 if [ ! -e /dev/kvm ]; then
-   mknod /dev/kvm c 10 $(grep '\<kvm\>' /proc/misc | cut -f 1 -d' ')
+    mknod /dev/kvm c 10 $(grep '\<kvm\>' /proc/misc | cut -f 1 -d' ')
+    chown :kvm /dev/kvm
+    chmod g+w /dev/kvm
+fi
+
+if [ ! -e /dev/net/tun ]; then
+    mkdir -p /dev/net
+    mknod /dev/net/tun c 10 $(grep '\<tun\>' /proc/misc | cut -f 1 -d' ')
+    chmod 666 /dev/net/tun
 fi
 
 # Prepare to start gns3server as gns3 user
@@ -11,8 +19,6 @@ USER=abc
 GROUP=abc
 
 # Fix permissions
-chown :kvm /dev/kvm
-chmod g+w /dev/kvm
 chown -R ${USER}:${GROUP} ${HOME}
 
 # Start gns3server

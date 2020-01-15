@@ -30,6 +30,7 @@ RUN dpkg --add-architecture i386 \
     && cd /usr/src/ubridge \
     && make \
     && make install \
+    && chmod u+s /usr/local/bin/ubridge \
     \
     ## dynamips
     && mkdir /usr/src/dynamips/build \
